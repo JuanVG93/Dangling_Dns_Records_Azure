@@ -1,32 +1,3 @@
-Function LogonAAD {
-	
-	#Checking if there's a session active in AzureAD, if no active session then it will log you in
-    Write-Host "Checking if you're currently signed into AzureAD" -Foregroundcolor Yellow
-	
-    if($null -eq $azureConnection.Account) 
-    {
-		
-        Write-Host "You're currently not signed into AzureAD" -Foregroundcolor Red
-        $AdminUser = whoami /upn
-        Connect-AzureAD -AccountId $AdminUser
-        Connect-AzAccount -AccountId $AdminUser
-        (Get-AzureADUser -ObjectId $AdminUser).ObjectId
-
-        if ($?) {
-
-            Write-Host "You are now signed into AzureAD! Welcome back $AdminUser" -Foregroundcolor Green
-
-        }
-		
-    }
-		
-	else {
-		
-		Write-Host "You're already signed into AzureAD!" -Foregroundcolor Green
-	}
-	
-}
-
 Function Get-SubscriptionIds {
 
     Param
@@ -229,6 +200,5 @@ Function Main {
 
 }
 
-LogonAAD
 Main
 Write-Host "Done!" -ForegroundColor Green
